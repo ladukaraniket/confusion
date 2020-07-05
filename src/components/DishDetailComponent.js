@@ -30,8 +30,6 @@ class DishDetail extends Component{
         const commentsMap = comments.map((comment) => {
             var date = comment.date.substring(0,10).split('-');
             
-            
-
             return(
                 <li>
                 <p>{comment.comment}</p>
@@ -54,9 +52,11 @@ class DishDetail extends Component{
     render(){
         if(this.props.dishDetail != null){
             return(
-                <div className="row">
-                    {this.renderDish(this.props.dishDetail)}
-                    {this.renderComments(this.props.dishDetail.comments)}
+                <div className="container">
+                    <div className="row">
+                        {this.renderDish(this.props.dishDetail)}
+                        {this.renderComments(this.props.dishDetail.comments)}
+                    </div>
                 </div>
             );
         }
