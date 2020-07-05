@@ -1,71 +1,63 @@
-import React, {Component} from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText} from 'reactstrap';
+import React from 'react';
+import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
 
 
-class DishDetail extends Component{
-    constructor(props){
-        super(props);
+function RenderDish({ dish }) {
+    return (
+        <div className="col-12 col-md-5 mt-1">
+            <Card>
+                <CardImg width="100%" src={dish.image} alt={dish.name}></CardImg>
+                <CardBody>
+                    <CardTitle >{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
+                </CardBody>
+            </Card>
+        </div>
+    );
+}
 
-        this.state ={
-            month_names_short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        };
-    }
 
-    renderDish(dish){
+function RenderComments({ comments }) {
+    const commentsMap = comments.map((comment) => {
+        var date = comment.date.substring(0, 10).split('-');
+        var month_names_short= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
         return (
-            <div className="col-12 col-md-5 mt-1">
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name}></CardImg>
-                    <CardBody>
-                        <CardTitle >{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
-                    </CardBody>    
-                </Card>
-            </div>            
-        );
-    }
-
-
-    renderComments(comments){
-        const commentsMap = comments.map((comment) => {
-            var date = comment.date.substring(0,10).split('-');
-            
-            return(
-                <li>
+            <li>
                 <p>{comment.comment}</p>
-                <p>-- {comment.author}, {this.state.month_names_short[date[1]-1]} {("0"+(parseInt(date[2])+1)).slice(-2)}, {date[0]}</p>
-                </li>
-            );
-        }) 
+                <p>-- {comment.author}, {month_names_short[date[1] - 1]} {("0" + (parseInt(date[2]) + 1)).slice(-2)}, {date[0]}</p>
+            </li>
+        );
+    })
 
-        return(
-            <div className="col-12 col-md-5 mt-1">
+    return (
+        <div className="col-12 col-md-5 mt-1">
             <h4 >Comments</h4>
             <ul className="list-unstyled">
                 {commentsMap}
             </ul>
+        </div>
+    );
+
+}
+
+const DishDetail = (props) => {
+    if (props.dishDetail != null) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <RenderDish dish={props.dishDetail}></RenderDish>
+                    <RenderComments comments={props.dishDetail.comments}></RenderComments>
+                </div>
             </div>
         );
-
     }
-
-    render(){
-        if(this.props.dishDetail != null){
-            return(
-                <div className="container">
-                    <div className="row">
-                        {this.renderDish(this.props.dishDetail)}
-                        {this.renderComments(this.props.dishDetail.comments)}
-                    </div>
-                </div>
-            );
-        }
-        else{
-            return(
-                <div></div>
-            );
-        }
+    else {
+        return (
+            <div></div>
+        );
     }
 }
+
 
 export default DishDetail;
