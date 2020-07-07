@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardImg, CardBody, CardTitle, CardText } from 'reactstrap';
+import { Card, CardImg, CardBody, CardTitle, CardText, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 
 function RenderDish({ dish }) {
@@ -20,7 +21,7 @@ function RenderDish({ dish }) {
 function RenderComments({ comments }) {
     const commentsMap = comments.map((comment) => {
         var date = comment.date.substring(0, 10).split('-');
-        var month_names_short= ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        var month_names_short = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         return (
             <li>
@@ -42,12 +43,23 @@ function RenderComments({ comments }) {
 }
 
 const DishDetail = (props) => {
-    if (props.dishDetail != null) {
+    if (props.dish != null) {
         return (
             <div className="container">
                 <div className="row">
-                    <RenderDish dish={props.dishDetail}></RenderDish>
-                    <RenderComments comments={props.dishDetail.comments}></RenderComments>
+                    <Breadcrumb>
+                        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                        <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                    </Breadcrumb>
+
+                    <div className="col-12">
+                        <h3>{props.dish.name}</h3>
+                        <hr></hr>
+                    </div>
+                </div>
+                <div className="row">
+                    <RenderDish dish={props.dish}></RenderDish>
+                    <RenderComments comments={props.comments}></RenderComments>
                 </div>
             </div>
         );
