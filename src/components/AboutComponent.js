@@ -1,11 +1,11 @@
 import React from 'react';
-import { Breadcrumb, BreadcrumbItem, Card, CardImg, CardImgOverlay, CardSubtitle, CardBody, CardHeader, Media } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardSubtitle, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 function RenderLeader(props) {
     return (
-        <Media className="p-3">
-            <Media left className="col-2">
+        <Media className="p-3" tag="li">
+            <Media left middle className="col-2">
                 <Media src={props.leader.image}></Media>
             </Media>
 
