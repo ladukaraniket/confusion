@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Card, CardImg, CardBody, CardTitle, CardText, Breadcrumb, BreadcrumbItem, Modal, ModalHeader, ModalBody, Button, Row, Col, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 
 const required = (val) => val && val.length;
@@ -113,7 +114,7 @@ function RenderDish({ dish }) {
 }
 
 
-function RenderComments({ comments , addComment, dishId}) {
+function RenderComments({ comments, addComment, dishId }) {
 
     const commentsMap = comments.map((comment) => {
         var date = comment.date.substring(0, 10).split('-');
@@ -140,7 +141,26 @@ function RenderComments({ comments , addComment, dishId}) {
 }
 
 const DishDetail = (props) => {
-    if (props.dish != null) {
+
+    if (props.isLoading) {                              //Loading
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading></Loading>
+                </div>
+            </div>
+        );
+    }
+    else if (props.errmess) {                           //Error Message
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errmess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (props.dish != null) {                      //Dishes Loaded
         return (
             <div className="container">
                 <div className="row">
